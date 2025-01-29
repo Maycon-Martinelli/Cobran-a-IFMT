@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http//www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{LayoutPadrao}">
+<head>
+	<meta charset="UTF-8">
+    <title>Pesquisa</title>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-primary">
+        <a href="" class="navbar-brand">
+            <img src="/images/ifmtlogo.png" width="50" height="50" alt="IFMT">
+        </a>
+    </nav>
+    
+<section layout:fragment="conteudo">	
+    <div class="card">
+        <div class="card-header tux-titulo-panel">
+            <span class="tux-titulo-panel">Pesquisa</span>
+            <div style='text-align:right'>
+            	<a href="http://localhost:8087/titulos/novo">  Clique aqui para voltar à pagina de cadastro</a>
+            </div>
+        </div>
+        <div class="card-body">
+ 			<table class="table table-bordered table-striped">
+			<thead>
+				<tr>
+					<th scope="col" class="text-center">#</th>
+					<th scope="col">Descrição</th>
+					<th scope="col" class="text-left">Data de Vencimento</th>
+					<th scope="col" class="text-right">Valor</th>
+					<th scope="col" class="text-center">Status</th>
+					<th scope="col"></th>
+				</tr>
+			</thead>
+			
+			<tbody>
+				<tr scope="row" th:each="titulo : ${titulos}">
+					<td class="text-center" th:text="${titulo.codigo}"></td>
+					<td th:text="${titulo.descricao}"></td>
+					<td class="text-center" th:text="${{titulo.dataVencimento}}"></td>
+					<td class="text-right" th:text="|R$ ${{titulo.valor}}|"></td>
+					<td class="text-center">
+						<span class="badge" th:text="${titulo.status.descricao}"
+						th:classappend="${titulo.pendente ? 'badge-danger' : 'badge-success'}"></span>
+					</td>
+				</tr>
+					
+				<tr>
+					<td colspan="6" th:if="${#lists.isEmpty(titulos)}">Nenhum registro encontrado</td>
+				</tr>
+			</tbody>
+			</table>
+        </div>
+    </div>
+</section>
+</body>
+</html>
